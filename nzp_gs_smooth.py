@@ -14,7 +14,7 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
     """Apply Gauss-Seidel Iteration Scheme algorithm to a folder of images in sequence.
 
     Args:
-        in_dir: The folder of images to process.
+        in_dir: The folder of images to process. Images should be padded with leading zeroes and a starting index of 1, e.g. slice_001.tif
         cur_dir: The current directory to work from.
         out_dir_images: The directory to place the transformed images.
         out_dir_transforms: Directory for calculated transforms.
