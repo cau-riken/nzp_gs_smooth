@@ -9,4 +9,5 @@ IEEE transactions on medical imaging, 34(2), 514–530. doi:10.1109/TMI.2014.236
 Nipype ready code - inner functions used inside the 'run' function.
 
 Author: Alexander Woodward, Connectome Analysis Unit, RIKEN CBS, Wako, Japan
+
 Email: alexander.woodward@riken.jp
