@@ -10,4 +10,4 @@ Nipype ready code - inner functions used inside the 'run' function.
 
 Author: Alexander Woodward, Connectome Analysis Unit, RIKEN CBS, Wako, Japan
 
-Email: alexander.woodward@riken.jp
+Email: alexander.woodward at riken dot jp
