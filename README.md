@@ -1,6 +1,5 @@
 # nzp_gs_smooth
-Python standalone version of the Gauss-Seidel Iteration Scheme to smooth a stack of brain section images.
-Apply Gauss-Seidel Iteration Scheme to smooth high-frequency distortions across a slice stack.
+Python standalone version of the Gauss-Seidel Iteration Scheme by Gaffling et al. (2015) to smooth high-frequency distortions across a stack of brain section images.
 
 Method described in Gaffling, S., Daum, V., Steidl, S., Maier, A., Kostler, H., & Hornegger, J. (2015). 
 A Gauss-Seidel iteration scheme for reference-free 3-D histological image reconstruction. 
