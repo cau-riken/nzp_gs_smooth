@@ -22,9 +22,9 @@ def main(inputFolder):
     print("Creating required folders.")
     print("This removes existing folders and data. Be careful!")
     cwd = os.getcwd()
-    working_dir = cwd + "/../working/"
-    out_images = cwd+'/../out_images'
-    out_transforms = cwd+'/../out_transforms'
+    working_dir = cwd + "/working/"
+    out_images = cwd+'/out_images'
+    out_transforms = cwd+'/out_transforms'
     if os.path.exists(working_dir) is True:
         shutil.rmtree(working_dir)
     if os.path.exists(out_images) is True:

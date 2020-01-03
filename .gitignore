@@ -1,0 +1,4 @@
+#Ignore generated folders
+out_images
+out_transforms
+working
