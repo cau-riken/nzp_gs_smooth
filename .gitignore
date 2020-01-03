@@ -2,3 +2,5 @@
 out_images
 out_transforms
 working
+#Ignore python generate bytecode, byte-compiled / optimized / DLL files
+__pycache__/
