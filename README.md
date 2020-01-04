@@ -1,9 +1,5 @@
-# nzp_gs_smooth
-Python standalone version of the Gauss-Seidel Iteration Scheme by Gaffling et al. (2015) to smooth high-frequency distortions across a stack of brain section images.
-
-Method described in Gaffling, S., Daum, V., Steidl, S., Maier, A., Kostler, H., & Hornegger, J. (2015). 
-A Gauss-Seidel iteration scheme for reference-free 3-D histological image reconstruction. 
-IEEE transactions on medical imaging, 34(2), 514–530. doi:10.1109/TMI.2014.2361784
+# NanoZoomer Pipeline: Python standalone version of the Gauss-Seidel Iteration Scheme
+Python standalone version of the Gauss-Seidel Iteration Scheme by [Gaffling et al. (2015)](https://www.ncbi.nlm.nih.gov/pubmed/25312918) to smooth high-frequency distortions across a stack of brain section images.
 
 Nipype ready code - inner functions used inside the 'run' function.
 
