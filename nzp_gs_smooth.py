@@ -30,6 +30,7 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
     import copy
     import os
     from nipype.interfaces.ants import Registration
+    from natsort import natsorted
 
     def reg_run(fixed_image, moving_image, output_transform_prefix, output_warped_image, ants_thread_count):
         # os.environ['PATH']+=':/path_to_antsbin'
@@ -88,6 +89,8 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
     # copy from the input directory first
     names_in = subprocess.check_output(["ls "+in_dir], shell=True, text=True)
     names_in = names_in.split()
+    # sort the strings using natural sort
+    names_in = natsorted(names_in)
     img_count = len(names_in)
     
     # copy and duplicate first and last
