@@ -1,4 +1,4 @@
-# NanoZoomer Pipeline: standalone version of the Gauss-Seidel Iteration Scheme
+# NanoZoomer Connectomics Pipeline: standalone version of the Gauss-Seidel Iteration Scheme
 Python standalone version of the Gauss-Seidel Iteration Scheme by [Gaffling et al. (2015)](https://www.ncbi.nlm.nih.gov/pubmed/25312918) to smooth high-frequency distortions across a stack of brain section images.
 
 Nipype ready code - inner functions used inside the 'run' function.
