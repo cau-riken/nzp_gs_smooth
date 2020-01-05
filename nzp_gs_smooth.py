@@ -23,7 +23,7 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
 
     """
     import numpy as np
-    # TODO(A.W.): Remove dependency on OpenCV and use only SimpleITK calls
+    # TODO(AW): Remove dependency on OpenCV and use only SimpleITK calls
     import cv2
     import subprocess
     import SimpleITK as sitk
@@ -86,16 +86,15 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
         sitk.WriteImage(out, out_filename)
         return out
 
-    # copy from the input directory first
+    # Copy from the input directory first
     names_in = subprocess.check_output(["ls "+in_dir], shell=True, text=True)
     names_in = names_in.split()
     # sort the strings using natural sort
     names_in = natsorted(names_in)
     img_count = len(names_in)
     
-    # copy and duplicate first and last
+    # Copy and duplicate first and last (Neumann boundary conditions)
     for i in range(0, img_count):
-        #print("Attempting to load "+in_dir+names_in[i])
         img = sitk.ReadImage(in_dir+names_in[i])
         index = i+1
         sitk.WriteImage(
@@ -116,7 +115,6 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
     img_count = len(names_in)
     image_names = []
 
-    # Neumann boundary already included
     for i in range(0, img_count):
         image_names.append(names_in[i])
 
@@ -127,21 +125,19 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
         for t in range(0, iterations):
             print("Starting iteration "+str(t+1)+" of "+str(iterations))
             if (t % 2 == 0):
-                # increment
                 for j in range(1, Z-1): # Z-1
-                    # calculate transform between j-1 and j+1
+                    # Calculate transform between j-1 and j+1
                     # fixed is j-1 moving is j+1
                     reg_run(cur_dir+'/current_iter/'+image_names[j-1], cur_dir+'/current_iter/'+image_names[j+1],
                             cur_dir+'/registration_output_transform/u_', cur_dir+'/registration_output_image/output_warped_image.nii', ants_thread_count)
                     img_u = sitk.ReadImage(cur_dir+'/registration_output_transform/u_0Warp.nii.gz', sitk.sitkVectorFloat64)
-                    # multiply it by half the deformation field
+                    # Multiply it by half the deformation field
                     img_JM1 = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[j+1])
-                    # make sure to account for pixel scale factor
+                    # Make sure to account for pixel scale factor
                     deform_image(img_JM1, img_u, 0.5, cur_dir+'/i_hat_image/output.nii')
-                    # register Ij to IHat
-                    reg_run(cur_dir+'/i_hat_image/output.nii', cur_dir+'/prev_iter/'+image_names[j],cur_dir+'/registration_output_transform/u_', cur_dir+'/registration_output_image/output_warped_image.nii', ants_thread_count)
-                    #subprocess.check_output(['rm '+cur_dir+'/registration_output_transform/u_0Warp.nii'], shell=True)
-                    # merge it with previous
+                    # Register Ij to IHat
+                    reg_run(cur_dir+'/i_hat_image/output.nii', cur_dir+'/prev_iter/'+image_names[j],cur_dir+'/registration_output_transform/u_', cur_dir+'/registration_output_image/output_warped_image.nii', ants_thread_count)                    
+                    # Merge it with previous
                     img_uAccNew = sitk.ReadImage(cur_dir+'/registration_output_transform/u_0Warp.nii.gz', sitk.sitkVectorFloat64)
                     if (t == 0):
                         sitk.WriteImage(img_uAccNew, cur_dir+'/current_transforms/u'+str(j)+'_Warp.nii')
@@ -149,33 +145,33 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
                         img_uAcc = sitk.ReadImage(cur_dir+'/current_transforms/u'+str(j)+'_Warp.nii', sitk.sitkVectorFloat64)
                         img_uAccNew = img_uAcc+img_uAccNew
                         sitk.WriteImage(img_uAccNew, cur_dir+'/current_transforms/u'+str(j)+'_Warp.nii')
-                    # update Ij using Ij0
+                    # Update Ij using Ij0
                     img_JOrig = sitk.ReadImage(cur_dir+'/input_with_boundary/'+image_names[j])
                     deform_image(img_JOrig, img_uAccNew, 1.0, cur_dir+'/current_iter/'+image_names[j])
-                # update boundaries
+                # Update boundaries
                 img_b = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[1])
                 sitk.WriteImage(img_b, cur_dir+'/current_iter/'+image_names[0])
                 img_b = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[Z-2])
                 sitk.WriteImage(img_b, cur_dir+'/current_iter/'+image_names[Z-1])
-                # copy Input to InputPreviousIteration
+                # Copy current_iter to prev_iter
                 for j in range(0, Z):
                     img_b = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[j])
                     sitk.WriteImage(img_b, cur_dir+'/prev_iter/'+image_names[j])
             else:
-                # increment
+                # Increment
                 for j in range(Z-2, 0, -1):  # Z-1
-                    # calculate transform between j-1 and j+1
-                    # fixed is j-1 moving is j+1
+                    # Calculate transform between j-1 and j+1
+                    # Fixed is j-1 moving is j+1
                     reg_run(cur_dir+'/current_iter/'+image_names[j+1], cur_dir+'/current_iter/'+image_names[j-1],
                             cur_dir+'/registration_output_transform/u_', cur_dir+'/registration_output_image/output_warped_image.nii', ants_thread_count)
                     img_u = sitk.ReadImage(cur_dir+'/registration_output_transform/u_0Warp.nii', sitk.sitkVectorFloat64)
-                    # multiply it by half the deformation field
+                    # Multiply it by half the deformation field
                     img_JM1 = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[j-1])
                     deform_image(img_JM1, img_u, 0.5, cur_dir+'/i_hat_image/output.nii')
-                    # register Ij to IHat
+                    # Register Ij to IHat
                     reg_run(cur_dir+'/i_hat_image/output.nii', cur_dir+'/prev_iter/'+image_names[j],
                             cur_dir+'/registration_output_transform/u_', cur_dir+'/registration_output_image/output_warped_image.nii', ants_thread_count)
-                    # merge it with previous
+                    # Merge it with previous
                     img_uAccNew = sitk.ReadImage(cur_dir+'/registration_output_transform/u_0Warp.nii.gz', sitk.sitkVectorFloat64)
                     if (t == 0):
                         sitk.WriteImage(img_uAccNew, cur_dir+'/current_transforms/u'+str(j)+'_Warp.nii')
@@ -183,36 +179,36 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
                         img_uAcc = sitk.ReadImage(cur_dir+'/current_transforms/u'+str(j)+'_Warp.nii', sitk.sitkVectorFloat64)
                         img_uAccNew = img_uAcc+img_uAccNew
                         sitk.WriteImage(img_uAccNew, cur_dir+'/current_transforms/u'+str(j)+'_Warp.nii')
-                    # update Ij
+                    # Update Ij
                     img_JOrig = sitk.ReadImage(cur_dir+'/input_with_boundary/'+image_names[j])
                     deform_image(img_JOrig, img_uAccNew,1.0,cur_dir+'/current_iter/'+image_names[j])
-                # update boundaries
+                # Update boundaries
                 img_b = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[1])
                 sitk.WriteImage(img_b, cur_dir+'/current_iter/'+image_names[0])
                 img_b = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[Z-2])
                 sitk.WriteImage(img_b, cur_dir+'/current_iter/'+image_names[Z-1])
-                # copy Input to InputPreviousIteration
+                # Copy current_iter to prev_iter
                 for j in range(0, Z):
                     img_b = sitk.ReadImage(cur_dir+'/current_iter/'+image_names[j])
                     sitk.WriteImage(img_b, cur_dir+'/prev_iter/'+image_names[j])
 
-    # copy results to output directories
+    # Copy results to output directories
     subprocess.call("cp "+cur_dir+"/current_iter/* "+out_dir_images, shell=True)
-    # remove the first and last since they were boundary conditions
+    # Remove the first and last since they were boundary conditions
     subprocess.call("rm "+out_dir_images+"/slice_0000.nii", shell=True)
     subprocess.call("rm "+out_dir_images+"/slice_"+format(img_count-1, '04d')+".nii", shell=True)
-    # copy the transforms to the correct output folder
+    # Copy the transforms to the correct output folder
     subprocess.call("cp "+cur_dir+"/current_transforms/* "+out_dir_transforms, shell=True)
-    # Fix the indexing
-    # copy from the input directory first
+    # Copy from the input directory first
     names_in = subprocess.check_output(["ls "+out_dir_images], shell=True, text=True)
     names_in = names_in.split()
     img_count = len(names_in)
-    # these images should be ordered based on the file naming convention
+    # TODO(AW): The following code isn't necessary...
+    # These images should be ordered based on the file naming convention
     for i in range(0, img_count):
-        print("Attempting to load "+out_dir_images+"/"+names_in[i])
+        #print("Attempting to load "+out_dir_images+"/"+names_in[i])
         img = sitk.ReadImage(out_dir_images+"/"+names_in[i])
         sitk.WriteImage(img, out_dir_images+"/out_"+format(i+1, '04d')+".nii")
-    # finally remove the old images
+    # Finally remove the old images
     subprocess.call("rm "+out_dir_images+"/slice_*", shell=True)
     return out_dir_images
