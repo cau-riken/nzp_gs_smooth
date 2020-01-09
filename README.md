@@ -12,7 +12,7 @@ The code was tested using Mac OSX, Python 3.7 using [Anaconda](https://www.anaco
 3. Working and output directories will be generated in the same directory as main.py.
 ## Citation
 
-If you use this code please cite the paper that describes the computational pipeline that this code is a part of:
+If you use this code please cite the paper that describes the computational pipeline that it is a part of:
 
 ```
 @article {Woodward748376,
