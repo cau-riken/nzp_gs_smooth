@@ -1,5 +1,5 @@
 # NanoZoomer Connectomics Pipeline: standalone version of the Gauss-Seidel Iteration Scheme
-Python standalone version of the Gauss-Seidel Iteration Scheme by [Gaffling et al. (2015)](https://www.ncbi.nlm.nih.gov/pubmed/25312918) to smooth high-frequency distortions across a stack of brain section images. This is a standalone version based on code from our [NanoZoomer Connectomics Pipeline](https://doi.org/10.1101/748376). The essential 'run' function is Nipype ready code (all of the inner functions that are used are placed inside it).
+Python standalone version of the Gauss-Seidel Iteration Scheme by [Gaffling et al. (2015)](https://www.ncbi.nlm.nih.gov/pubmed/25312918) to smooth high-frequency distortions across a stack of brain section images. This is a standalone version based on code from our [NanoZoomer Connectomics Pipeline](https://doi.org/10.1101/748376). The essential 'run' function is Nipype ready code; contains all necessary calls as inner functions.
 
 Author: Alexander Woodward, Connectome Analysis Unit, RIKEN CBS, Wako, Japan. Email: alexander.woodward at riken dot jp
 
@@ -9,7 +9,7 @@ The code was tested using Mac OSX, Python 3.7 using [Anaconda](https://www.anaco
 1. Setup ANTs and make sure *antsRegistration* is accessible from your shell path.
 1. Use `conda create --name <env> --file requirements.txt`, where <env> is the name of the environemt, to create a suitable conda environment.
 2. Run `python main.py <input_directory>`, where <input_directory> is a folder of brain section images in sequence, starting with index 1, e.g. image_001.tif, image_002.tif, image_003.tif, ...
-3. Working directories and output folders in the same directory as main.py.
+3. Working and output directories will be generated in the same directory as main.py.
 ## Citation
 
 If you use this code please cite the paper that describes the computational pipeline that this code is a part of:
