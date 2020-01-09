@@ -3,7 +3,16 @@ Python standalone version of the Gauss-Seidel Iteration Scheme by [Gaffling et a
 
 Author: Alexander Woodward, Connectome Analysis Unit, RIKEN CBS, Wako, Japan. Email: alexander.woodward at riken dot jp
 
-If you use this code for your exciting research, please cite the paper that describes the computational pipeline that this code is a part of:
+## Usage
+
+The code was tested using Mac OSX, Python 3.7 using [Anaconda](https://www.anaconda.com/distribution/), and [ANTs Advanced Normalization Tools 2.1.0](https://github.com/ANTsX/ANTs/releases/tag/v2.1.0). 
+1. Setup ANTs and make sure *antsRegistration* is accessible from your shell path.
+1. Use `conda create --name <env> --file requirements.txt`, where <env> is the name of the environemt, to create a suitable conda environment.
+2. Run `python main.py <input_directory>`, where <input_directory> is a folder of brain section images in sequence, starting with index 1, e.g. image_001.tif, image_002.tif, image_003.tif, ...
+3. Working directories and output folders in the same directory as main.py.
+## Citation
+
+If you use this code please cite the paper that describes the computational pipeline that this code is a part of:
 
 ```
 @article {Woodward748376,
