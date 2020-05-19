@@ -32,26 +32,24 @@ def create_dirs():
         shutil.rmtree(out_images)
     if os.path.exists(out_transforms) is True:
         shutil.rmtree(out_transforms)
-    os.mkdir(out_images)#final output images
-    os.mkdir(out_transforms)#final output transforms
+    os.mkdir(out_images)#Final output images
+    os.mkdir(out_transforms)#Final output transforms
     os.mkdir(working_dir)
-    os.mkdir(working_dir+'/input_with_boundary')#OriginalImagesWithB
-    os.mkdir(working_dir+'/current_iter')#Input
-    os.mkdir(working_dir+'/prev_iter')#InputPreviousIteration
-    os.mkdir(working_dir+'/registration_output_transform')#OutputTransforms
-    os.mkdir(working_dir+'/current_transforms')#OutputTransformsU
-    os.mkdir(working_dir+'/i_hat_image')#OutputIHAT
-    os.mkdir(working_dir+'/registration_output_image')#Output
+    os.mkdir(working_dir+'/input_with_boundary')
+    os.mkdir(working_dir+'/current_iter')
+    os.mkdir(working_dir+'/prev_iter')
+    os.mkdir(working_dir+'/registration_output_transform')
+    os.mkdir(working_dir+'/current_transforms')
+    os.mkdir(working_dir+'/i_hat_image')
+    os.mkdir(working_dir+'/registration_output_image')
 
     dirs = {
         'working_dir': working_dir,
         'out_images': out_images,
         'out_transforms': out_transforms
     }
-
     return dirs
     
-
 if __name__ == '__main__':
     now = datetime.now()
     current_time_start = now.strftime("%H:%M:%S")
@@ -62,8 +60,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     dirs = create_dirs()
 
-    # run the procedure
-    # multiple of 2 is best for 'iterations'
+    # Run the procedure
     nzp_gs_smooth.run(args.input_dir, dirs['working_dir'], dirs['out_images'], dirs['out_transforms'], 2, 20)
 
     now = datetime.now()
