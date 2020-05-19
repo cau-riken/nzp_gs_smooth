@@ -178,12 +178,12 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
     names_in = subprocess.check_output(["ls "+out_dir_images], shell=True, text=True)
     names_in = names_in.split()
     img_count = len(names_in)
-    # TODO(AW): The following code isn't necessary...
+    
     # These images should be ordered based on the file naming convention
     for i in range(0, img_count):
-        #print("Attempting to load "+out_dir_images+"/"+names_in[i])
         img = sitk.ReadImage(out_dir_images+"/"+names_in[i])
         sitk.WriteImage(img, out_dir_images+"/out_"+format(i+1, '04d')+".nii")
     # Finally remove the old images
     subprocess.call("rm "+out_dir_images+"/slice_*", shell=True)
+
     return out_dir_images
