@@ -1,5 +1,5 @@
 # NanoZoomer Connectomics Pipeline: standalone version of the Gauss-Seidel Iteration Scheme
-Python standalone version of the Gauss-Seidel Iteration Scheme by [Gaffling et al. (2015)](https://www.ncbi.nlm.nih.gov/pubmed/25312918) to smooth high-frequency distortions across a stack of brain section images. This is a standalone version based on code from our [NanoZoomer Connectomics Pipeline](https://doi.org/10.1007/s00429-020-02073-y). The essential 'run' function is Nipype ready code, containing all necessary calls as inner functions.
+Python standalone version of the Gauss-Seidel Iteration Scheme by [Gaffling et al. (2015)](https://www.ncbi.nlm.nih.gov/pubmed/25312918) to smooth high-frequency distortions across a stack of brain section images. This is a standalone version based on code from our [NanoZoomer Connectomics Pipeline](https://doi.org/10.1007/s00429-020-02073-y). The essential 'run' function is Nipype ready code, containing all necessary calls as inner functions (see https://nipype.readthedocs.io/en/0.11.0/users/function_interface.html#using-external-packages).
 
 Author: Alexander Woodward, Connectome Analysis Unit, RIKEN CBS, Wako, Japan. Email: alexander.woodward at riken dot jp
 
