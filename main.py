@@ -51,9 +51,8 @@ def create_dirs():
     return dirs
     
 if __name__ == '__main__':
-    now = datetime.now()
-    current_time_start = now.strftime("%H:%M:%S")
-    print("Current time = ", current_time_start)
+    start_time = datetime.now()
+    
     parser = argparse.ArgumentParser(description='Standalone version of gauss-seidel smoothing of image stack.')
     parser.add_argument('input_dir', metavar='input_dir',
                     help='A directory with prealigned images')
@@ -63,7 +62,7 @@ if __name__ == '__main__':
     # Run the procedure
     nzp_gs_smooth.run(args.input_dir, dirs['working_dir'], dirs['out_images'], dirs['out_transforms'], 2, 20)
 
-    now = datetime.now()
-    current_time_end = now.strftime("%H:%M:%S")
-    print("Start time = ", current_time_start)
-    print("End time = ", current_time_end)
+    end_time = datetime.now()
+    
+    print("Total running time = ", end_time-start_time)
+    
