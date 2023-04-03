@@ -20,11 +20,11 @@ import nzp_gs_smooth
 
 
 def create_dirs():
-    print("Creating required folders.")
-    print("This removes existing folders and data. Be careful!")
+    print('Creating required folders.')
+    print('This removes existing folders and data. Be careful!')
     cwd = os.getcwd()
 
-    working_dir = cwd + "/working/"
+    working_dir = cwd + '/working/'
     out_images = cwd + '/out_images'
     out_transforms = cwd + '/out_transforms'
     if os.path.exists(working_dir) is True:
@@ -73,4 +73,4 @@ if __name__ == '__main__':
 
     end_time = datetime.now()
 
-    print("Total running time = ", end_time - start_time)
+    print('Total running time = ', end_time - start_time)

@@ -109,33 +109,33 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
             sitk.WriteImage(
                 img,
                 cur_dir +
-                "/input_with_boundary/slice_" +
+                '/input_with_boundary/slice_' +
                 format(
                     index,
                     '04d') +
-                ".nii")
+                '.nii')
             if index == 1:
                 sitk.WriteImage(
-                    img, cur_dir + "/input_with_boundary/slice_0000.nii")
+                    img, cur_dir + '/input_with_boundary/slice_0000.nii')
             elif index == img_count:
                 sitk.WriteImage(
                     img,
                     cur_dir +
-                    "/input_with_boundary/slice_" +
+                    '/input_with_boundary/slice_' +
                     format(
                         index +
                         1,
                         '04d') +
-                    ".nii")
+                    '.nii')
         # Copy files into directories
-        subprocess.call("cp " + cur_dir + "/input_with_boundary/* " +
+        subprocess.call("cp " + cur_dir + '/input_with_boundary/* ' +
                         cur_dir + "/current_iter/", shell=True)
         print("Copied files to ./current_iter")
-        subprocess.call("cp " + cur_dir + "/input_with_boundary/* " +
-                        cur_dir + "/prev_iter/", shell=True)
+        subprocess.call("cp " + cur_dir + '/input_with_boundary/* ' +
+                        cur_dir + '/prev_iter/', shell=True)
         print("Copied files to ./prev_iter")
         names_in = subprocess.check_output(
-            ["ls " + cur_dir + "/current_iter/"], shell=True, text=True)
+            ['ls ' + cur_dir + '/current_iter/'], shell=True, text=True)
         names_in = names_in.split()
 
         return names_in
@@ -236,14 +236,14 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
                          img_count, ants_thread_count)
 
     # Copy results to output directories
-    subprocess.call("cp " + cur_dir + "/current_iter/* " +
+    subprocess.call("cp " + cur_dir + '/current_iter/* ' +
                     out_dir_images, shell=True)
     # Remove the first and last since they were boundary conditions
-    subprocess.call("rm " + out_dir_images + "/slice_0000.nii", shell=True)
-    subprocess.call("rm " + out_dir_images + "/slice_" +
-                    format(img_count - 1, '04d') + ".nii", shell=True)
+    subprocess.call("rm " + out_dir_images + '/slice_0000.nii', shell=True)
+    subprocess.call("rm " + out_dir_images + '/slice_' +
+                    format(img_count - 1, '04d') + '.nii', shell=True)
     # Copy the transforms to the correct output folder
-    subprocess.call("cp " + cur_dir + "/current_transforms/* " +
+    subprocess.call("cp " + cur_dir + '/current_transforms/* ' +
                     out_dir_transforms, shell=True)
     # Copy from the input directory first
     names_in = subprocess.check_output(
@@ -253,17 +253,17 @@ def run(in_dir, cur_dir, out_dir_images, out_dir_transforms,
 
     # These images should be ordered based on the file naming convention
     for i in range(0, img_count):
-        img = sitk.ReadImage(out_dir_images + "/" + names_in[i])
+        img = sitk.ReadImage(out_dir_images + '/' + names_in[i])
         sitk.WriteImage(
             img,
             out_dir_images +
-            "/out_" +
+            '/out_' +
             format(
                 i +
                 1,
                 '04d') +
-            ".nii")
+            '.nii')
     # Finally remove the old images
-    subprocess.call("rm " + out_dir_images + "/slice_*", shell=True)
+    subprocess.call('rm ' + out_dir_images + '/slice_*', shell=True)
 
     return out_dir_images
